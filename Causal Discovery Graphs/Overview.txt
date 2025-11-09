@@ -1,0 +1,9 @@
+The file consists of different ways to construct Causal Graphs
+Contraints Based Methods:
+    a. PC
+    b. FSI
+Score Based Methods:
+    a. GES
+    b. XGES
+Others:
+    a. DirectLingam
