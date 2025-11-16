@@ -131,13 +131,15 @@ For merger of another branch changes in your current branch
 
 git merge <<branche_name>>
 
---The different history of specified branch is merged in current branch
---If the different branches have different additional commits, a merge conflict can happen which can be resolved by manually looking at the conflicted changes and selecting which we want to continue with
---During the merge conflict, git will add symbols 
->>>>>>>>>>>>>>>>Header
->>>>>>>>>>>>>>>>footer
----------------
---These are to be removed during the merge conflicts
 
+----------------------------------------------------------------------------------------------------------
 
-fetch
+For removing changes out of commit but having them in staging space
+
+git reset --soft HEAD~1
+
+----------------------------------------------------------------------------------------------------------
+
+For removing changes out of commit and staging space
+
+git reset HEAD~1
