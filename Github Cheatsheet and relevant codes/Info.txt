@@ -143,3 +143,32 @@ git reset --soft HEAD~1
 For removing changes out of commit and staging space
 
 git reset HEAD~1
+
+
+----------------------------------------------------------------------------------------------------------
+
+For rename of a branch 
+
+- You need to rename your branch in local repository
+
+git branch -m <old-branch-name> <new-branch-name>
+
+- Push the changes, rename created a new branch in online repository
+
+git push origin -u <new-branch-name>
+
+- Delete the old branch from online repository
+
+git push origin --delete <old-branch-name>
+
+
+----------------------------------------------------------------------------------------------------------
+
+Whenever the new changes are pushed to other branches, you get a notification in GitHub to compare the changes and
+push the changes to main branch
+
+
+----------------------------------------------------------------------------------------------------------
+
+To directly open google collab from GitHub, Change the domain from 'github.com' to 'githubtocolab.com'. After this, you will be asked to authenticate. After Authentication, you directly edit the notebook in google collab.
+GitHub dev is also a good feature in this scenario.
