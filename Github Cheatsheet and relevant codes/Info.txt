@@ -172,3 +172,22 @@ push the changes to main branch
 
 To directly open google collab from GitHub, Change the domain from 'github.com' to 'githubtocolab.com'. After this, you will be asked to authenticate. After Authentication, you directly edit the notebook in google collab.
 GitHub dev is also a good feature in this scenario.
+
+
+------------------------------------------------------------------
+
+How to create a new directory
+
+Initialise the git repository
+
+git init
+
+Start link to new repository
+
+git remote add <<remote_URL>>
+
+clone the repository
+
+git clone <<remote URL>>
+
+stage, commit and push for different sceanrios
