@@ -1,0 +1,143 @@
+git restore --staged <file-name>
+git push -u origin <your-branch-name>
+git merge <source-branch-name>
+
+git branch -d <branch_name>
+
+
+-----------------------------------------------------------------------------------------------------
+-- To remove an existing branch
+git credential-manager erase
+
+
+Create global config for a user
+
+git config --global user.name "<<user name>>"
+git config user.email "<<user email>>"
+
+-----------------------------------------------------------------------------------------------------
+
+To create a new repository for existing file in local machine
+--Go to existing command directory using CD
+git init
+
+--GIT init will only create a directory in you local machine, you can make changes to it using GIT ADD and COMMIT
+--In order to push the local directory to remote URL, you need to first connect to local repository
+
+GIT remote add origin <<repository URL>>
+
+--Once repository is connected, the changes can be pushed to GITHUB
+
+---------------------------------------------------------------------------------------------------------
+
+To Clone an existing repository in local machine
+--Go to exiting exiting repository in local machine using CD
+git clone <<repository URL>>
+
+--Git clones the entire repository and not just the main branch, you can swicth to a specific branch using git switch
+
+---------------------------------------------------------------------------------------------------------
+
+To create a new branch
+git branch <<new branch name>>
+
+--Once branch name is done, you can still continue to add and commit before pushing it to remote URL
+
+--Since the remote repository does not have a reference of the new branch, you would need to tell Github of a upstream to new branch
+git push -u origin <<branch name>>
+
+---------------------------------------------------------------------------------------------------------
+
+To push changes of an already existing branch
+
+Since the branch already exist in remote repository, go to the branch in your local machine with 
+git switch <<branch name>>
+
+The changes can be pushed from there with normal git push
+git pushed
+
+----------------------------------------------------------------------------------------------------------
+
+To add new changes, we add them in stage and then the changes from stage are push to local repository using commit
+
+git add <<file_name>>
+
+--For every file, we have a different git add
+
+The changes from Git add are consolidated and pushed in local environment using GIT commit
+git commit --m <<update text>>
+
+--All the commits are stored as branches and a number of commits can be simultaneously pushed to online repository
+
+----------------------------------------------------------------------------------------------------------
+
+How to see the differences 
+
+--Differences between changes that have been done but are not yet staged using commands
+git diff
+
+--Differences of what is stages but commit prior
+git diff --staged
+
+--Differences between different branches
+git dif branch_B...branche_A
+
+--shows what is in Branch A that is not in branch B
+
+----------------------------------------------------------------------------------------------------------
+
+To remove the staged changes
+git reset <<file name>>
+
+This will remove the changes from the file but will retain the updates in other file in the directory
+
+----------------------------------------------------------------------------------------------------------
+
+If we should pull the changes from online repository in our local repository
+
+git pull
+
+
+----------------------------------------------------------------------------------------------------------
+
+How to commit the Stages Changes
+
+git commit --m "<<details around commit>>"
+
+---Git commit just save it in your local repository, you need to push to shave the changes in online repository
+
+
+----------------------------------------------------------------------------------------------------------
+
+List all the branches that are there in the repository
+git branch
+
+----------------------------------------------------------------------------------------------------------
+
+Switch to a different branch in the repository
+git branch <<branch_names>>
+
+--Git checkout can also be used to swicth branches but it can also be used to restore files 
+
+----------------------------------------------------------------------------------------------------------
+
+Show history of the current branch
+
+git log
+
+----------------------------------------------------------------------------------------------------------
+
+For merger of another branch changes in your current branch
+
+git merge <<branche_name>>
+
+--The different history of specified branch is merged in current branch
+--If the different branches have different additional commits, a merge conflict can happen which can be resolved by manually looking at the conflicted changes and selecting which we want to continue with
+--During the merge conflict, git will add symbols 
+>>>>>>>>>>>>>>>>Header
+>>>>>>>>>>>>>>>>footer
+---------------
+--These are to be removed during the merge conflicts
+
+
+fetch
