@@ -1,0 +1,38 @@
+# Classification using multiple algorithms - Decision Tree, Random Forest, Logistic Regression, XG GBoost and Navie Bayes
+
+# Random Forest Classifier
+# Random forest is an ensemble learning method for classification that takes the majority vote from multiple decision trees to improve accuracy and reduce overfitting.
+# It uses bagging (bootstrap aggregating) to create diverse trees by training each tree on a random subset of the data and features.
+# Every tree in the forest votes for a class, and the class with the most votes is chosen as the final prediction.
+# Every tree is independent, making random forests robust and effective for various classification tasks.
+
+# Decision Tree Classifier
+# A decision tree is a flowchart-like structure used for classification tasks.
+# It splits the data into subsets based on feature values, creating branches that lead to decision nodes and leaf nodes.
+# Each internal node represents a feature, each branch represents a decision rule, and each leaf node represents a class label.
+# The tree is built by recursively partitioning the data to maximize information gain or minimize impurity (e.g., Gini impurity or entropy).
+# Decision trees are easy to interpret and visualize, making them popular for classification problems.
+
+# Logistic Regression Classifier
+# Logistics regression is a classification algorithm which uses sigmoid function to predict the output
+# Cost function used is log loss function
+
+# XG GBoost Classifier
+# XGBoost is an ensemble of weak learners (typically decision trees) in a sequential manner, where each new tree corrects the errors of the previous ones.
+
+# Naive Bayes Classifier
+# Naive Bayes is a probabilistic classifier based on Bayes' theorem, assuming independence between features.
+# It calculates the posterior probability of each class given the input features and assigns the class with the highest probability.
+
+# Implementation
+	# a. Data Preprocessing - 
+		# Data Standardisation - Scaling the data to have mean 0 and variance 1 -> Only for Logistic Regression
+     	# Train Test Split - Splitting the data into training and testing sets
+     	# Balancing the Data - Using SMOTE to balance the data
+ 	# b. Model Building -
+     		# Grid Search CV - Hyperparameter tuning using GridSearchCV
+     		# Model Training - Training the model on the training data
+ 	# c. Model Evaluation -
+     		# Confusion Matrix - Evaluating the model using confusion matrix
+     		# Classification Report - Evaluating the model using classification report
+     		# ROC AUC Curve - Evaluating the model using ROC AUC curve

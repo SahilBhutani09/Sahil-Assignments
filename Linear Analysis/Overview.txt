@@ -1,0 +1,24 @@
+# Linear regression finds the linear relationship between a dependent variable and one or more independent variables.
+# Cost function used is Mean Squared Error (MSE). the objective is to minimize the MSE with gradient descent.
+# Assumptions of Linear Regression:
+    # 1. Linearity: The relationship between the independent and dependent variables is linear.
+    # 2. Independence: The residuals (errors) are independent.
+    # 3. Homoscedasticity: The residuals have constant variance at every level of the independent variable.
+    # 4. Normality: The residuals of the model are normally distributed.
+    # 5. No multicollinearity: In case of multiple independent variables, they should not be highly correlated with each other.
+    # 6. No autocorrelation: The residuals should not be correlated with each other, especially in time series data.
+
+# Implementation of Linear Regression using Gradient Descent
+    # Data Preparation
+    # Standardize the features to have mean 0 and variance 1 for better convergence.
+    # Remove the features that are highly correlated to avoid multicollinearity.
+
+    # Training the Modela
+    # Split the dataset into training and testing sets.
+    # Set the tuning parameters: learning rate, number of iterations, penalty function (L1 or L2 regularization).
+
+    # Output and Evaluation of the results
+    # Coefficients of the linear equation (weights for each feature).
+    # Intercept (bias term).
+    # Performance metrics: R-squared, Mean Squared Error (MSE), Mean Absolute Error (MAE).
+    # Analyse the p values of the coefficients to determine their statistical significance and ANOVA to assess the overall model accuracy goodness.
