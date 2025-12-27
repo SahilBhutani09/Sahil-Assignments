@@ -1,12 +1,45 @@
 The file consists of different ways to construct Causal Graphs
-Contraints Based Methods:
+Constraints Based Methods:
     a. PC
     b. FSI
 Score Based Methods:
     a. GES
     b. XGES
 Others:
-    a. DirectLingam
+    a. Direct Lingam
 
 
-test
+PC 
+1. PC (Peter-Clark) algorithm is a constraint-based causal discovery algorithm that infers causal relationships from observational data by identifying conditional independencies among variables.
+2. It starts with a fully connected graph and iteratively removes edges based on conditional independence tests, resulting in a partially directed acyclic graph (PDAG) that represents the inferred causal structure.
+
+Disadvantages of PC algorithm include its sensitivity to the choice of significance level for independence tests and its assumption that there are no latent confounders in the data.
+Further, it doesnt tell you the direction of all edges in the graph, leading to some ambiguity in the inferred causal relationships.
+
+
+FCI
+1. FCI ( Fast Causal Inference) is a constraint-based causal discovery algorithm that can infer causal relationships from observational data, even in the presence of latent confounders and selection bias.
+2. It extends the PC algorithm by incorporating additional rules to handle these complexities.
+
+
+GES
+1. GES causal discover algorithm stands for Greedy Equivalence Search
+2. It is used for learning the structure of a causal graph from observational data
+3. The algorithm operates in two main phases: a forward phase and a backward phase   
+4. In the forward phase, the algorithm starts with an empty graph and iteratively adds edges that improve a scoring criterion until no further improvement can be made
+5. In the backward phase, the algorithm removes edges that do not contribute to the score or improve it further
+
+
+XGES
+1. XGES Causal discovery algorithm implementation in Python
+2. It stands for "eXtended Greedy Equivalence Search"
+3. XGES is an extension of the GES algorithm that allows for more flexible search strategies in causal discovery.
+4. XGES is designed to identify causal structures from observational data by searching through equivalence classes of directed acyclic graphs (DAGs).
+5. Implementation - It starts with an empty graph and iteratively adds, removes, or reverses edges based on a scoring criterion until a local optimum is reached.
+
+
+Direct Lingam
+1. Direct Lingam helps us understand the correct causal structure among observed variables in a dataset.
+2. It is particularly useful in scenarios where we suspect that there are no hidden confounders and the relationships are linear with non-Gaussian noise.
+3. Assumption of non-Gaussianity is crucial as it allows the algorithm to identify the correct causal directions, which is not possible with Gaussian noise.
+
