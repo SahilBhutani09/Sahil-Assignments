@@ -1,0 +1,26 @@
+ARIMA stands for Autoregressive Integrated Moving Average. It depends on below paramter
+P -> If current value is dependedent on previous values. If yes, how many values are to be considered
+    The significant lags can be found using PACF
+
+D -> The series has a trend associated with it. You remove the impact of trend by difference. 
+    We need to share the level of different that removes the impact of trend
+    Dicky Fuller test can be used to check if the series is stationary or not
+
+Q -> The current value also uses past error to calculate the current value. It shows how many errors are to be considered in this scenario
+    The siginicant lags can be determined using ACF
+
+
+Once we have P, D and Q values, we can build the ARIMA model using those parameters.
+Auto_ARIMA is an automated way of finding the best parameters for ARIMA model by trying out different combinations of P, D and Q 
+and selecting the best one based on AIC/BIC values.
+AIC (Akaike Information Criterion) and BIC (Bayesian Information Criterion) are statistical measures used to compare different models and select the best one.
+AIC = -2ln(L) + 2k
+BIC = -2ln(L) + k * ln(n)
+Where L is the likelihood of the model and k is the number of parameters and n is the number of observations (sample size)
+The likelihood of the model indicates how well the model fits the data.
+    $$\ell(\theta) = -\frac{T}{2} \ln(2\pi) - \frac{T}{2} \ln(\sigma^2) - \frac{1}{2\sigma^2} \sum_{t=1}^{T} \epsilon_t^2$$
+    $T$: Number of observations.
+    $\sigma^2$: Variance of the errors.
+    $\epsilon_t$: The residual (actual value minus predicted value).
+
+The ARIMA equation so formed is then validated with Ljung-Box test to check if the residual errors are white noise or not.
