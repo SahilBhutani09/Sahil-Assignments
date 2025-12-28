@@ -1,0 +1,25 @@
+# Marketing Mix Modelling helps us understand the effectiveness of different marketing channels and optimize budget allocation.
+# MMM using bayesian prior to understand the impact of marketing efforts on sales.
+
+#Input
+# Marketing Channels - TV, Radio, Social Media, Print - monthly spend data
+# Every Makreting Channel will have its own adstock and saturation parameters
+# Control Variables - There could be external variables like economic indicators, competitor actions etc. which can also impact sales.
+# Seasonality - Monthly or quarterly seasonality patterns in sales data. Fourier series can be used to model seasonality.
+# Sales Data - Historical sales data to model against marketing spend and control variables.    
+
+#Coefficients of default priors
+#1. intercept - The baseline level of sales or target variable in the absence of any marketing spend or other variables. It sets the starting point for the model.
+#2. likelihood - When you increase the focus on the likelihood, the model relies more heavily on the observed data and less on the priors. This means the model will be more data-driven, allowing the observed outcomes to have a stronger influence on the parameter estimates
+#3. gamma control - Control variables that account for external factors, such as macroeconomic conditions, holidays, or other non-marketing variables that might influence sales.
+#4. gamma fourier - Fourier terms used to model seasonality in the data, capturing recurring patterns or cycles in sales.
+#5. adstock alpha - Controls the adstock effect, determining how much the impact of marketing spend decays over time.
+#6. saturation lamda - Defines the steepness of the saturation curve, determining how quickly diminishing returns set in as marketing spend increases.
+#7. saturation beta - The marketing spend coefficient, which measures the direct effect of marketing spend on the target variable (e.g. sales).
+
+#Output
+# Posterior Distributions - Posterior distributions for all parameters, allowing for uncertainty quantification.
+# ROI Estimates - Estimates of return on investment for each marketing channel, helping to identify the most effective channels.
+# Forecasting - Forecast future sales based on different marketing spend scenarios.
+
+
