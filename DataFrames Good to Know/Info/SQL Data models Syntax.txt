@@ -1,0 +1,188 @@
+Read about data governance principals
+Data Stretgies execution
+Software development Lifecycle 
+Agile Product Delivery
+Governance designs
+Risk Mitigation Strategies
+Types of Fraud - How they handled by different systems
+1. Density-Based Spatial Clustering of Applications with Noise (DBSCAN)
+regex expressions SQL
+
+
+Learn regex, 
+date fnctions, 
+string functions, 
+CTE
+
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    manager_id INT,
+    role VARCHAR(50),
+    FOREIGN KEY (manager_id) REFERENCES employees(emp_id)
+);
+
+INSERT INTO employees (emp_id, emp_name, manager_id, role) VALUES
+(1, 'Alice', NULL, 'CEO'),
+(2, 'Bob', 1, 'VP of Engineering'),
+(3, 'Charlie', 1, 'VP of Marketing'),
+(4, 'David', 2, 'Engineering Manager'),
+(5, 'Eve', 2, 'Senior Developer'),
+(6, 'Frank', 4, 'Junior Developer'),
+(7, 'Grace', 3, 'Marketing Specialist');
+
+with recursive employees_data as (
+  select * from employees where emp_id = 2
+  union 
+  select E.* from employees_data ED
+    inner join employees E
+    where ED.emp_id = E.manager_id
+) select * from employees_data;
+
+In a recursive CTE, the recursive part (the query after the UNION) is evaluated row-by-row based on the results of the previous iteration.
+When you use MAX(_index) and MAX(_date), you are introducing an aggregate function. MySQL doesn't allow aggregate functions inside the recursive step of a CTE because it expects to process individual rows streaming from the previous step, not calculate a grand total or maximum of the whole intermediate table.
+With recursive lengths as (
+  select 1 as _index, str_to_date('2026-01-01', '%Y-%m-%d') as _date
+  union 
+  select _index + 1, 
+      date_add(_date, interval 1 day) as _date
+  from lengths
+  where _date < str_to_date('2026-01-07', '%Y-%m-%d')
+) select * from lengths;
+
+
+case when num_value > ifnull(lag(num_value) over (partition by '1' order by 1) then 1,0)
+        else 0 
+  end as _index 
+   
+   
+
+with RawData as (select num_value,
+  case when num_value > (lag(num_value) over (partition by '1')) then 0
+        else 1
+  end as _index 
+from number_sequence), query as (select num_value,
+      _index, 
+      sum(_index) over (partition by '1' rows between unbounded preceding and current row) as _groups
+from RawData) select concat(cast(min(num_value) as char), '-',
+  cast(max(num_value) as char))
+from query
+group by _groups
+
+
+-- Grouping Sets
+
+--GROUP BY GROUPING SETS is a powerful extension of the standard GROUP BY clause. It allows you to compute multiple GROUP BY aggregations in a single query, rather than writing multiple queries combined with UNION ALL
+--When you write a standard GROUP BY A, B, your database returns exactly one level of aggregation: the metrics for every unique combination of A and B.
+--If you also want the totals for just A, just B, and the grand total for the whole dataset, you would traditionally have to write four separate queries and UNION ALL them together.
+
+SELECT 
+    Region, 
+    Product_Category, 
+    SUM(Sales) AS Total_Sales
+FROM Sales_Data
+GROUP BY GROUPING SETS (
+    (Region, Product_Category), -- Strategy 1: Subtotals by Region and Category
+    (Region),                   -- Strategy 2: Subtotals by Region only
+    (Product_Category),         -- Strategy 3: Subtotals by Category only
+    ()                          -- Strategy 4: Grand Total (empty set)
+);
+
+
+--Rollup 
+-- WITH ROLLUP is a modifier used with the GROUP BY clause that automatically calculates hierarchical subtotals and a grand total moving from right to left across your specified columns.
+-- The most critical thing to know about WITH ROLLUP is that the order of your columns in the GROUP BY clause matters entirely. It treats your columns as a strict hierarchy from left to right.
+--If you write: GROUP BY Country, State, City WITH ROLLUP
+--MySQL will automatically calculate aggregates for these four specific groupings:
+--(Country, State, City) — The most granular breakdown.
+--(Country, State) — Subtotals for each state (ignoring city).
+--(Country) — Subtotals for each country (ignoring state and city).
+--() — The Grand Total of everything.
+
+
+
+--Upsert Commands
+
+select Region, 
+  Product_Category,
+  sum(total_sales)
+from Sales 
+group by Region, Product_Category with Rollup
+
+-- This query is executed hourly by the orchestrator
+MERGE INTO Fact_Order_Fulfillment AS target
+USING (
+    SELECT 
+        o.Raw_Order_Id,
+        o.Timestamp_Ordered,
+        k.Accepted_Timestamp,
+        d.Picked_Up_Timestamp,
+        d.Delivered_Timestamp,
+        d.Status,
+        o.Order_Total_Amount
+    FROM Stg_Order_Lifecycle o
+    LEFT JOIN Stg_Order_Kitchen_Events k ON o.Raw_Order_Id = k.Order_Id
+    LEFT JOIN Stg_Delivery_Partner_Events d ON o.Raw_Order_Id = d.Order_Id
+    WHERE o.Ingest_Timestamp >= CURRENT_TIMESTAMP - INTERVAL '6 HOURS' -- Scans the persistent staging window
+) AS source
+ON target.Degenerate_Order_Id = source.Raw_Order_Id
+
+-- SCENARIO 1: The transaction just happened (Checkout). Create the initial partial record.
+WHEN NOT MATCHED THEN
+    INSERT (Degenerate_Order_Id, Order_Placed_Time, Final_Order_Status, Gross_Order_Value)
+    VALUES (source.Raw_Order_Id, source.Timestamp_Ordered, 'PLACED', source.Order_Total_Amount)
+
+-- SCENARIO 2: The rider just completed the delivery hours later. Update the missing fields.
+WHEN MATCHED AND target.Order_Delivered_Time IS NULL AND source.Delivered_Timestamp IS NOT NULL THEN
+    UPDATE SET 
+        target.Restaurant_Accepted_Time = source.Accepted_Timestamp,
+        target.Rider_Picked_Up_Time = source.Picked_Up_Timestamp,
+        target.Order_Delivered_Time = source.Delivered_Timestamp,
+        target.Final_Order_Status = source.Status,
+        -- Calculate durations dynamically now that all timestamps have finally arrived
+        target.Kitchen_Prep_Duration_Minutes = TIMESTAMPDIFF(MINUTE, source.Timestamp_Ordered, source.Accepted_Timestamp),
+        target.Rider_Transit_Duration_Minutes = TIMESTAMPDIFF(MINUTE, source.Picked_Up_Timestamp, source.Delivered_Timestamp),
+        target.Total_Fulfillment_Duration_Minutes = TIMESTAMPDIFF(MINUTE, source.Timestamp_Ordered, source.Delivered_Timestamp);
+		
+		
+---
+select into creates a new table and insert into insert into a current tables
+
+--different syntax for static and dynamic values for insert into
+-- static
+
+
+-- How could transactions atomicity be ensured
+
+Begin transaction; 
+
+-- SQL statements
+
+commit; 
+
+--this could ensure that only after the SQL inside is run then only the databasis are updated
+
+
+
+
+insert into other(colA, colB) values
+('hi', 'hello');
+
+insert into other(colA, colB)
+select colA, colB from new; 
+
+
+create table other(
+  _index int primary key
+);
+
+
+create table test (
+  _index int auto_increment, 
+  numbers int,
+  others int, 
+  constraint check (numbers > 10),
+  constraint primary key(_index),
+  constraint foreign key (others) references other(_index)
+);
+
